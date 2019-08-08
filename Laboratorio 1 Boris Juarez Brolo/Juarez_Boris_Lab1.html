@@ -1,0 +1,116 @@
+,---
+title: "Laboratorio1BorisJuarezBrolo"
+author: "Boris Juarez Brolo"
+date: "31 de julio de 2019"
+output: rmarkdown::github_document
+---
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+###Problema 1
+
+```{r, cache = TRUE, echo = TRUE}
+
+
+library(openxlsx)
+library(dplyr)
+
+path <- "~/UFM/Economía/Laboratorio 1/"
+
+merge_file_name <-"~/UFM/Economía/Laboratorio 1/Laboratorio 1.xlsx"
+
+filenames_list <- list.files(path=path, full.names=TRUE)
+
+All <- lapply(filenames_list,function(filename){
+    print(paste("Merging",filename,sep = " "))
+    df<-read.xlsx(filename)
+    df$mes<-substr(filename,53,54)
+    df = df[, c("COD_VIAJE","CLIENTE","UBICACION",
+"CANTIDAD", "PILOTO", "Q", "CREDITO", "UNIDAD", "mes")]
+    
+    
+    return(df)
+})
+
+df <- do.call(rbind.data.frame, All)
+write.xlsx(df,merge_file_name)
+
+```
+
+### Problema 2 
+```{r, cache = TRUE, echo = TRUE}
+### Definición de vectores 
+a<- c(1,2,3,2,5,5,5)
+b<- c(1,3,5,7,9,9,9)
+c<- c(1,2,4,6,8,8,8)
+Ch1<-c("o","ir","te","ir","talon")
+Ch2<-c("a","b","c","d","e")
+
+### Creación de la Función 
+
+moda<- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+A <- lapply(a,function (x) sort (x))
+B <- lapply(b,function (x) sort (x))
+C <- lapply(c,function (x) sort (x))
+
+# Consolidación del Vector.
+v <- c(A,B,C)
+
+# Aplicando la función.
+resultado <- moda(v)
+print(resultado)
+
+# Create the vector with characters.
+charv <- c(Ch1, Ch2)
+
+# Calculate the mode using the user function.
+resultado <- moda(charv)
+print(resultado)
+
+
+```
+
+
+### Problema 3
+```{r, cache = TRUE, echo = TRUE}
+# Read in the data
+df <- read.delim("~/UFM/Economía/Información_para_análisis_estadístico_vehículos_2019_enero/INE_PARQUE_VEHICULAR_080219.txt", 
+                  header = TRUE, 
+                  sep = "|", 
+                  fill = TRUE, 
+                  strip.white = TRUE, 
+                  stringsAsFactors = TRUE, 
+                  na.strings = "EMPTY")
+
+# Print out `df`
+print(df)
+
+
+```
+
