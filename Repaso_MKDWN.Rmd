@@ -1,0 +1,151 @@
+---
+title: "Repaso_MKDWN"
+author: "Boris Juarez Brolo"
+date: "28 de julio de 2019"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Instalar Liberías
+```{r, cache = TRUE, echo = TRUE}
+install.packages("dplyr")
+install.packages("RMySQL")
+install.packages("lubridate")
+install.packages("openxlsx")
+install.packages("tidyverse")
+install.packages("stringer")
+install.packages("readr")
+
+
+```
+
+```{r}
+require(dplyr)
+```
+
+```{r}
+string <- "This is a string"
+string
+class(string)
+nchar(string)
+length(string)
+```
+
+```{r}
+number<- 234
+class(number)
+typeof(number)
+
+```
+```{r}
+number2<- 234L
+class(number2)
+typeof(number2)
+```
+
+```{r}
+logical <- FALSE
+```
+```{r}
+factor_1 <- c("Mon","Tue","Wed","Thu","Fri","Sat","Sun","Wed","Thu","Fri","Sat","Sun","Wed","Thu","Wed","Thu")
+factor_1 <- factor(factor_1)
+factor_1
+as.numeric(factor_1)
+
+```
+
+```{r}
+factor_2 <- c("Mon","Tue","Wed","Thu","Fri","Sat","Sun","Wed","Thu","Fri","Sat","Sun","Wed","Thu","Wed","Thu")
+factor_2 <- ordered(factor_2, levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))
+factor_2
+```
+
+## Vectors 
+```{r}
+sample(x = 1:100, size = 8,replace = FALSE)
+class(sample(x =1:5, size = 8, replace = TRUE ))
+vector_1 <- c(1:5)
+vector_1
+
+```
+
+```{r, cache = TRUE}
+#df$Colum4 <- 11:16
+new_elements <- c("new_string", 19,"z")
+df<- rbind(df,new_elements)
+df_copy <- rbind(df_copy,new_elements)
+is.na(df_copy)
+```
+
+## Cargar archivos de texto
+```{r}
+library (readr)
+library (dplyr)
+library(tidyverse)
+library(tidytext)
+text_file <- 'data/quijote.txt'
+
+readLines(text_file, n=10 , encoding = "UTF-8", skipNul = TRUE)
+
+###usando readr
+
+quijote_lines <- reead_lines(text_file)
+quijote_lines
+
+#### performance de funciones
+
+system.time(readLines(text_file, n=10 , encoding = "UTF-8", skipNul = TRUE))
+system.time(reead_lines(text_file))
+
+#####obtener partes de un string
+
+###ufuncs o funciones universales
+
+substr("0101020000000201",1,6)
+
+#####tokenizar
+quijote_frame <-data_frame(txt = quijote_lines)
+head(quijote_frame)
+quijote_words <-unnest-tokens(quijote_frame, input = txt , output = words , token= "words")
+
+###contar palabras
+quijote_count <- count(quijote_words, words, sort=TRUE)
+class(quijote_count)
+
+###### limpiar stopwords
+
+spanish_stopwords <- data_frame(words=quanteda::stopwords(language = "es"))
+view(spanish_stopwords)
+quijote_words_clean<-anti_join(quijote_words, spanish_stopwords)
+
+quijote_words_clean<-count(quijote_words_clean,words, sort = TRUE)
+
+quijote_clean_count
+
+
+```
+
+

@@ -1,0 +1,64 @@
+---
+title: "RBasics"
+author: "Boris Juarez Brolo"
+date: "29 de julio de 2019"
+output: rmarkdown::github_document
+---
+###Functions
+```{r, cache = TRUE, echo = TRUE}
+find_sample<- function(x){
+  for_index <- sample (1:nrow(x), size=20, replace = TRUE)
+  new_df <- x[for_index,]
+  return(new_df)
+}
+data<- data.frame(
+  a=1:10,
+  b=sample(c("GT","US","CA"), size = 10, replace = TRUE )
+)
+find_sample(data)
+
+
+```
+
+
+### Ejercicio 2
+```{r,cache=TRUE}
+generate_df <- function(x){
+  df<- data.frame(
+    a = sample(letters, size = 10, replace = TRUE),
+    b = sample(1:10, size = 10, replace = TRUE)
+  )
+return(df)
+}
+generate_df(1)
+
+result_list <- list()
+#system.time(for(i in 1: 100000){
+ # result_list[[i]]<- generate_df(1)
+#})
+
+system.time(
+  lapply(1:10000,generate_df)
+)
+  
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
