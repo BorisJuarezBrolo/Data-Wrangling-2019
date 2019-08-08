@@ -1,0 +1,103 @@
+---
+title: "Lab2"
+author: "Boris Juarez Brolo"
+date: "7 de agosto de 2019"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r, cache = TRUE, echo = TRUE}
+
+require(RMySQL)
+connection_name <- "datawrangling.co4pgsadnasr.us-east-2.rds.amazonaws.com"
+db_name <- "dataWrangling"
+user <- "dstrack"
+password <- "datawrangling2019"
+drv = dbDriver("MySQL")
+mydb = dbConnect(drv,host=connection_name,dbname=db_name,user=user,pass=password)
+#use <- para conectarse a base de datos en caso no este seleccionada
+#bd.field
+
+#Ejercicio 1
+#Query <- dbSendQuery(mydb,"SELECT *  FROM heroes_information;")
+#hero <- dbFetch(Query,n=10)
+#hero
+
+#Ejercicio 2
+#Query <- dbSendQuery(mydb,"SELECT DISTINCT Publisher  FROM heroes_information;")
+#PUBLISHER <- dbFetch(Query,n=10)
+#PUBLISHER
+
+#Ejercicio 3
+#Query <- dbSendQuery(mydb,"SELECT COUNT(DISTINCT Publisher) FROM heroes_information;")
+#Ej3 <- dbFetch(Query,n=10)
+#Ej3
+
+#Ejercicio 4
+#Query <- dbSendQuery(mydb,"SELECT * FROM heroes_information WHERE Height>'200' ;")
+#Ej4 <- dbFetch(Query,n=10)
+#Ej4
+
+#Ejercicio 6 y 7
+#Query6 <- dbSendQuery(mydb,"SELECT * FROM heroes_information WHERE Height>'200' AND Race='Human' ;")
+#Ej6 <- dbFetch(Query6,n=10)
+#Ej6
+
+#Ejercicio 7
+#Query7 <- dbSendQuery(mydb," SELECT COUNT(name) FROM heroes_information WHERE Weight<'200' AND Weight>'100' ;")
+#Ej7 <- dbFetch(Query7,n=10)
+#Ej7
+
+#Ejercicio 8
+#Query <- dbSendQuery(mydb,"SELECT COUNT(`Eye Color`) FROM heroes_information WHERE `Eye Color`='blue' OR `Eye Color`='red';")
+#Ej8 <- dbFetch(Query,n=10)
+#Ej8
+
+
+#Ejercicio 9
+#Query9 <- dbSendQuery(mydb,"SELECT COUNT(name) FROM heroes_information WHERE Weight BETWEEN'200' AND '100' ;")
+#Ej9 <- dbFetch(Query9,n=10)
+#Ej9
+
+#Ejercicio 10
+#Query10 <- dbSendQuery(mydb,"SELECT name, Weight, Height  FROM heroes_information WHERE Weight >'200' AND Height > '100' ORDER BY Height DESC ;")
+#Query10 <- dbSendQuery(mydb,"SELECT name, Race  FROM heroes_information ORDER BY name, Race;")
+#Ej10 <- dbFetch(Query10,n=10)
+#Ej10
+
+#Ejercicio  11
+#Query11 <- dbSendQuery(mydb,"SELECT Gender, Publisher, COUNT(*)  FROM heroes_information WHERE Gender = 'Female' GROUP BY Publisher;")
+#Ej11 <- dbFetch(Query11,n=10)
+#Ej11
+
+#Ejercicio 12
+Query12 <- dbSendQuery(mydb,"SELECT Alignment, Race, Publisher, COUNT(*)  FROM heroes_information WHERE Alignment = 'good' HAVING COUNT(*)>30;")
+Ej12 <- dbFetch(Query12,n=10)
+Ej12
+
+
+```
+
