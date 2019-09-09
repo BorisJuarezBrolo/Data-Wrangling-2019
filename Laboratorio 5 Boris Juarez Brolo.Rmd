@@ -1,0 +1,64 @@
+---
+title: "Laboratorio 5 Boris Juarez Brolo"
+author: "Boris Juarez Brolo"
+date: "2 de septiembre de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+
+require(dplyr)
+require(lubridate)
+require(readr)
+require(ggplot2)
+require(tidyverse)
+plot(pressure)
+```
+```{r, cache=TRUE}
+
+#Parte 1
+#install.packages("lubridate")
+require(lubridate)
+last_eclipse <- ymd_hms("2017/08/21 18:26:40", tz = "UTC")
+s_m <- duration("29 d 12H 44M 3S")
+saros <- s_m*223
+paste('EL siguiente eclipstotal de sol ocurrirá aproximadamente el día ', last_eclipse+saros)
+
+```
+
+```{r,  cache=TRUE}
+lab5<-read_csv("~/UFM/Economía/Lab5/data.csv")
+lab5<- dmy(lab5$`Fecha Creacion`)
+lab5<- dmy(lab5["Fecha Final"])
+
+lab5$fechahora_creacion <- make_datetime(year = year(lab5$`Fecha Creacion`), month = month(lab5$`Fecha Creacion`), 
+                                    day = day(lab5$`Fecha Creacion`), hour = hour(lab5$`Hora Creación`), 
+                                    min = minute(lab5$`Hora Creación`), sec = second(lab5$`Hora Creación`))
+lab5$fechahora_final <- make_datetime(year = year(lab5["Fecha Final"]), month = month(lab5["Fecha Final"]), 
+                                    day = day(lab5["Fecha Final"]), hour = hour(lab5$`Hora Final`), 
+                                    min = minute(lab5$`Hora Final`), sec = second(lab5$`Hora Final`))
+lab5$intervalo <- as.duration(lab5$fechahora_creacion %--% lab5$fechahora_final)
+lab5$`Caller ID` <- as.factor(lab5$`Caller ID`)
+lab5$minutos <- as.numeric(lab5$intervalo/60)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
