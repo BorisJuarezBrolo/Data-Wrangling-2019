@@ -1,0 +1,110 @@
+---
+title: "Laboratorio 6"
+author: "Boris Juarez Brolo"
+date: "September 11, 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+```{r}
+#1 
+require(stringr)
+
+str_detect(
+  string = c("PBDF000","PZZZ999","PZXb0123","PZTb129","PAXb123","PBXb993"),
+  pattern = "^abc[A-zb-z1-9] .*"
+)
+
+```
+
+```{r}
+require(stringr)
+
+#2 
+
+str_detect(
+  string = c("Ejemplo1.pdf","prueba2.PDF","respuestas_del_examen.jpg"," amor.JPG"),
+  pattern = "\\>(.jpg|.JPG|.pdf|.PDF|.Pdf|.Jpg|.jPg|.pDf|.pdF|.jpG)"
+)
+```
+
+```{r}
+#3
+
+require(stringr)
+
+str_detect(
+  string = c("abcdef2R","$1adsced","$1adsceD","!BBdsced","9999999"),
+  pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})"
+)
+```
+
+```{r}
+#4
+require(stringr)
+
+str_detect(
+  string = c("19002324","01008970","02009981","30009981","30008970"),
+  pattern = "^([0-2][0-9]|30)00([0-8][0-9][0-7][0-9])"
+)
+
+```
+
+```{r}
+
+#5
+require(stringr)
+
+str_detect(
+  string = c("pit, spot, spate, slap two, respite
+             pt,Pot,peat,part"),
+  pattern = "^([0-2][0-9]|30)00([0-8][0-9][0-7][0-9])"
+)
+
+```
+
+```{r}
+
+#6
+
+require(stringr)
+
+str_detect(
+  string = c("50230087575","503310087575","50230075798","+50230009981"),
+  pattern = "^([5])0([2])|([5])0([2])(?=.{8})"
+)
+
+
+```
+
+```{r}
+#8
+require(stringr)
+
+str_detect(
+  string = c("abc012333ABCDEEEE","zbc012333ABCDEEEZ","abc1212129AAA"),
+  pattern = "^(?=.{0,3}[a-z])(?=.{2,9}[0-9]),(?=.{0,3}[A-Z])"
+)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
