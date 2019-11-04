@@ -63,6 +63,43 @@ agg_ratings <- aggregate(rating~movieId, new_ratings, FUN=mean)
 names(agg_ratings)[1] <- 'id'
 app_movies <- merge(new_movies, agg_ratings[, c("id", "rating")], by="id")
 
+## 1. Detalle el dataframe
+
+skim(app_movies)
+
+## 2.Analísis de datos
+
+plot_histogram(app_movies)
+plot_boxplot(app_movies, by = "budget")
+plot_boxplot(app_movies, by = "popularity")
+plot_scatterplot(app_movies, by = "popularity", sampled_rows = 500L)
+plot_scatterplot(app_movies, by = "budget", sampled_rows = 500L)
+plot_correlation(na.omit(app_movies), maxcat = 8L)
+
+## 3. Análisis de Correlación
+ggscatter(app_movies, x = "rating", y = "popularity", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "rating", ylab = "popularity")
+ggscatter(app_movies, x = "vote_count", y = "revenue", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "vote_count", ylab = "revenue")
+ggscatter(app_movies, x = "revenue", y = "popularity", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "revenue", ylab = "popularity")
+
+##4. Conclusiones
+
+##1. Se percibe una correlación positiva y significativa entre los votos y el ingreso de las peliculas . A más votos más ingreso, la variación en los votos implica un 83% de la explicación de la variación del ingreso
+
+##2. Se percibe una correlación positiva y pocosignificativa entre la popularidad y el rating de las peliculas . 
+
+##3. Se percibe una correlación positiva y significativa entre la popularidad y el ingreso de las peliculas . la variación de los ingresos explica en 48% la variación de la popularidad.
+
+##4. El presupuesto y su variación determinan el 79% de la variación del ingreso de la película.
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
