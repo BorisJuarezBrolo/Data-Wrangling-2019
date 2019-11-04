@@ -26,5 +26,43 @@ You can also embed plots, for example:
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
+```{r cache=TRUE, echo=FALSE}
+library(dplyr)
+library(readr)
+install.packages('DataExplorer')
+library(DataExplorer)
+library(plotly)
+install.packages('skimr')
+library(skimr)
+install.packages('robustHD')
+library(robustHD)
+install.packages('ggpubr')
+library(ggpubr)
+install.packages('formattable')
+library(formattable)
+
+##Manipulando el dataframe 
+
+df_movies <- read_csv('movies.csv')
+df_ratings <- read_csv('ratings.csv')
+new_ratings <- df_ratings %>% na.omit()
+new_movies <- df_movies %>% na.omit()
+agg_ratings <- aggregate(rating~movieId, new_ratings, FUN=mean)
+names(agg_ratings)[1] <- 'id'
+app_movies <- merge(new_movies, agg_ratings[, c("id", "rating")], by="id")
+
+```
+```{r}
+##Manipulando el dataframe 
+
+df_movies <- read_csv('movies.csv')
+df_ratings <- read_csv('ratings.csv')
+new_ratings <- df_ratings %>% na.omit()
+new_movies <- df_movies %>% na.omit()
+agg_ratings <- aggregate(rating~movieId, new_ratings, FUN=mean)
+names(agg_ratings)[1] <- 'id'
+app_movies <- merge(new_movies, agg_ratings[, c("id", "rating")], by="id")
+
+```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
